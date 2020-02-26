@@ -10,7 +10,7 @@ This is a project developed for learning purposes. It may be a good base to depl
 **Usage and explanation** 
 
 - The Django application is served by Gunicorn (WSGI application)
-- An arbitrary amount of Postgres databases can easily be added to the setup. Simply add an `mynewdb.env` file  to the `/config/db` directory with the same parameters as in `database2.env`, it's easy to figure out. Then, edit `docker-compose.yml` and add a service for `mynewdb`, taking inspiration from the `database2` service. 
+- An arbitrary amount of Postgres databases can easily be added to the setup. Simply add an `mynewdb.env` file  to the `/config/db` directory with similary parameters to those in `database2.env`, it's easy to figure out. Then, edit `docker-compose.yml` and add a service for `mynewdb`, taking inspiration from the `database2` service. No need to add anything to Django `settings.py` file, it scans `config/db` and adds to the `DATABASES` dictionary automatically
 - NginX is used as a reverse proxy and static files server. Static and media files are persistently stored in volumes.
 - Python dependencies are managed through `pipenv`, with`Pipfile` and `Pipfile.lock`. Also, I personally recommend to run `export PIPENV_VENV_IN_PROJECT="enabled"` and then `pipenv lock` to create the Python virtual environment you'll be using for development in the project's root. (`.venv` directory)
 
