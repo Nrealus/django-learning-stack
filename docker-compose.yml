@@ -13,29 +13,33 @@ version: '3'
 services:
 
   # database containers, one for each db
-  database1:
+  database1: # <-- IMPORTANT: same name as in DATABASES setting, otherwise Django won't find the database!
     image: postgres:alpine
+    container_name: djstack_psqldb1
     volumes:
       - database1_volume:/var/lib/postgresql/data
     env_file:
-      - config/db/database1_env
+      - config/db/database1.env
     networks:
       - database1_network
 
   database2:
     image: postgres:alpine
+    container_name: djstack_psqldb2
     volumes:
       - database2_volume:/var/lib/postgresql/data
     env_file:
-      - config/db/database2_env
+      - config/db/database2.env
     networks:
       - database2_network
 
   # web container, with django + gunicorn
   djangoapp:
-    build: .
-    environment:
-      - DJANGO_SETTINGS_MODULE
+    build:
+      context: .
+      args:
+        DJANGO_SETTINGS_MODULE: ${DJANGO_SETTINGS_MODULE}
+    container_name: djstack_web    
     volumes:
       - .:/opt/services/djangoapp/src
       - static:/opt/services/djangoapp/static
@@ -51,6 +55,7 @@ services:
   # reverse proxy container (nginx)
   nginx:
     image: nginx:alpine
+    container_name: djstack_nginx
     ports:
       - 8000:80
     volumes:

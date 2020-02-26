@@ -1,47 +1,63 @@
 .PHONY: docs clean
 
-COMMAND = docker-compose run --rm djangoapp /bin/bash -c
+RUNCOM = docker-compose run --rm djangoapp /bin/bash -c
+EXECCOM = docker exec -it djstack_web /bin/bash -c
 
-all: build #test
+#all: build #test
 
-build:
+build-dev:
+	export DJANGO_SETTINGS_MODULE="djproject.settings.settings_dev"
+	docker-compose build
+
+build-prod:
+	export DJANGO_SETTINGS_MODULE="djproject.settings.settings_prod"
 	docker-compose build
 
 run:
 	docker-compose up
 
+exec-ctnr:
+	$(EXECCOM) $(filter-out $@,$(MAKECMDGOALS))
+# BAD PRACTICE APPARENTLY BUT EH
+
+#migrate:
+#	$(RUNCOM) 'cd djproject; for db in default database2; do ./manage.py migrate --database=$${db}; done'
+
 migrate:
-	$(COMMAND) 'cd djproject; for db in default database2; do ./manage.py migrate --database=$${db}; done'
+	$(EXECCOM) 'cd djproject; for db in default database2; do ./manage.py migrate --database=$${db}; done'
 
 collectstatic:
-	docker-compose run --rm djangoapp djproject/manage.py collectstatic --no-input
+	$(EXECCOM) './djproject/manage.py collectstatic --no-input'
+
+#collectstatic:
+#	docker-compose run --rm djangoapp djproject/manage.py collectstatic --no-input
 
 #check: checksafety checkstyle
 
 #test:
-#	$(COMMAND) "pip install tox && tox -e test"
+#	$(RUNCOM) "pip install tox && tox -e test"
 
 #checksafety:
-#	$(COMMAND) "pip install tox && tox -e checksafety"
+#	$(RUNCOM) "pip install tox && tox -e checksafety"
 
 #checkstyle:
-#	$(COMMAND) "pip install tox && tox -e checkstyle"
+#	$(RUNCOM) "pip install tox && tox -e checkstyle"
 
 #coverage:
-#	$(COMMAND) "pip install tox && tox -e coverage"
+#	$(RUNCOM) "pip install tox && tox -e coverage"
 
 #clean:
-	rm -rf build
-	rm -rf djproject.egg-info
-	rm -rf dist
-	rm -rf htmlcov
-	rm -rf .tox
-	rm -rf .cache
-	rm -rf .pytest_cache
+#	rm -rf build
+#	rm -rf djproject.egg-info
+#	rm -rf dist
+#	rm -rf htmlcov
+#	rm -rf .tox
+#	rm -rf .cache
+#	rm -rf .pytest_cache
 #	find . -type f -name "*.pyc" -delete
-	rm -rf $(find . -type d -name __pycache__)
-	rm .coverage
-	rm .coverage.*
+#	rm -rf $(find . -type d -name __pycache__)
+#	rm .coverage
+#	rm .coverage.*
 
 dockerclean:
 	docker system prune -f

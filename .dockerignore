@@ -1,0 +1,8 @@
+.gitignore
+.vscode
+.venv
+Dockerfile
+docker-compose.yml
+UNUSED
+Makefile
+LICENSE

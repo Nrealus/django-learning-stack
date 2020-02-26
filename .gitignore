@@ -1,3 +1,4 @@
 UNUSED/
 .vscode/
 *__pycache__*
+.venv/

@@ -10,8 +10,7 @@ name = "pypi"
 Django = "*"
 "psycopg2-binary" = "*"
 gunicorn = "*"
-redis = "*"
-celery = "*"
+python-dotenv = "*"
 
 [dev-packages]
 
