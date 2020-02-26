@@ -28,6 +28,7 @@ https://github.com/ruddra/docker-django
 **Bugs or problems, possible improvements in the future or interesting additions** (in no particular order)
 
 - `.dockerignore` doesn't work...
+- CONCERNING : Too many docker images are created for some reason (and they're huge !) 
 - Set up an easy test environment, possibly with `tox`, `bandit`(..?) or other stuff
 - Security cheat sheet : https://snyk.io/blog/python-security-best-practices-cheat-sheet/
 - Add `numpy`, `scipy`, `pandas` to allow for cool math stuff or data science projects
