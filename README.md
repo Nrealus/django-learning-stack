@@ -3,7 +3,7 @@
 
 ## Django stack Docker setup
 
-This is my first Docker and Web project. It is a Docker base setup for web application development with Django.
+This is a first attempt on a Docker and Web project. It is a Docker base setup for web application development with Django.
 
 This is a project developed for learning purposes. It may be a good base to deploy various web apps, for fun or for learning purposes.
 
